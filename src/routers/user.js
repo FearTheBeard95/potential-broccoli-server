@@ -148,4 +148,15 @@ router.get('/users/me/avatar/:id', auth, async (req, res)=>{
         res.status(404).send()
     }
 })
+router.get('/users/:id', async (req, res)=>{
+    const user = await users.findById(req.params.id)
+    try {
+        if(!user){
+            throw new Error()
+        }
+        res.send(user)
+    } catch (error) {
+        res.status(404).send()
+    }
+})
 module.exports = router

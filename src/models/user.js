@@ -67,13 +67,6 @@ userSchema.statics.findByCredentials = async (email, password) => {
     return user
 }
 
-// Linking user to articles reference
-userSchema.virtual('tasks',{
-    ref: 'articles',
-    localField:'_id',
-    foreignField: 'owner'
-})
-
 //Generate authentication token for valid user
 userSchema.methods.generateAuthToken = async function(){
     const token = jwt.sign({_id: this._id.toString()}, 'sahbakfheb382392nufjdknd3ud3dnjdd')
