@@ -5,6 +5,8 @@ const cookieParser = require('cookie-parser')
 const bodyParser =require('body-parser')
 const nodemailer = require('nodemailer')
 const userRoute = require('./routers/user')
+const documentRoute = require('./routers/document')
+const galleryRoute = require('./routers/gallery')
 const mongoose = require('./database/mongoose')
 const auth = require('../src/middleware/auth')
 
@@ -23,6 +25,9 @@ hbs.registerPartials(partialsPath)
 app.use(express.static(publicPath))
 
 app.use(express.json())
+
+app.use(documentRoute)
+app.use(galleryRoute)
 app.use(userRoute)
 
 const urlencodedParser = bodyParser.urlencoded({extended: false})

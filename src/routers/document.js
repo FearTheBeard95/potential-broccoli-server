@@ -1,10 +1,10 @@
-import express from 'express'
-import jwt from 'jsonwebtoken'
-import multer from 'multer'
-import sharp from 'sharp'
-import bodyParser from 'body-parser'
-import auth from '../middleware/auth'
-import {documents} from '../models/document'
+const express = require('express')
+const jwt = require('jsonwebtoken')
+const multer = require('multer')
+const sharp = require('sharp')
+const bodyParser = require('body-parser')
+const auth  = require('../middleware/auth')
+const {documents} = require('../models/document')
 
 const router = new express.Router()
 
@@ -15,21 +15,85 @@ const upload = multer({
     limits: {
         fileSize: 50000000
     },
-    fileFilter (req, file, cb){
-        if(!file.originalname.toLocaleLowerCase().match(/\.pdf/)){
+    fileFilter(req, file, cb){
+        if(!file.originalname.toLowerCase().match(/\.pdf/)){
             return cb(new Error('Please upload a PDF file'))
         }
         cb(undefined, true)
     }
 })
 
-// Create document route
-router.post('/documents',auth, urlencodedParser, upload.single('Document'), async(req, res)=>{
+// Create article reports route
+router.post('/documents/researchreport', urlencodedParser, upload.single('document'), async(req, res)=>{
     try {
         const document = new documents({
             title: req.body.title,
-            type: req.body.type,
-            document: req.file.buffer
+            type: "Research Report",
+            abstract: req.body.abstract,
+            file: req.file.buffer
+        })
+
+        await document.save()
+        res.redirect(req.get('referer'))
+    } catch (error) {
+        res.status(500).send(error.message)
+    }
+})
+
+// Create opinion pieces route
+router.post('/documents/opinionpieces', urlencodedParser, upload.single('document'), async(req, res)=>{
+    try {
+        const document = new documents({
+            title: req.body.title,
+            type: "Opinion Pieces",
+            abstract: req.body.abstract,
+            file: req.file.buffer
+        })
+
+        await document.save()
+        res.status(200).send()
+    } catch (error) {
+        res.status(500).send(error.message)
+    }
+})
+
+router.get('/documents', async (req, res)=>{
+    const match = {}
+    let sort = {}
+
+    if(req.query.type){
+        match.type = req.query.type
+    }
+
+    if(req.query.sortBy){
+        const parts = req.query.sortBy.split(':')
+        sort[parts[0]] = parts[1] === 'desc' ? -1 : 1
+    }
+
+    try {
+        const skip = parseInt(req.query.skip) || 0
+
+        const docs = await documents.find(match).limit(4).skip(skip)
+        const count = await documents.count(match)
+
+        res.status(200).send({
+            documents: docs,
+            count
+        })
+    } catch (error) {
+        res.status(500).send(error.message)
+        sort = undefined
+    }
+})
+
+// Create article & workshop papers route
+router.post('/documents/articleworkshop', urlencodedParser, upload.single('document'), async(req, res)=>{
+    try {
+        const document = new documents({
+            title: req.body.title,
+            type: "Article & Workshop Papers",
+            abstract: req.body.abstract,
+            file: req.file.buffer
         })
 
         await document.save()

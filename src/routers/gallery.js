@@ -1,11 +1,11 @@
-import express from 'express'
-import jwt from 'jsonwebtoken'
-import multer from 'multer'
-import sharp from 'sharp'
-import bodyParser from 'body-parser'
-import auth from '../middleware/auth'
-import { Gallerys } from '../models/gallery'
-import { Photos } from '../models/photo'
+const express = require('express')
+const jwt = require('jsonwebtoken')
+const multer = require('multer')
+const sharp = require('sharp')
+const bodyParser = require('body-parser')
+const auth = require('../middleware/auth')
+const { Gallerys } = require('../models/gallery')
+const { Photos } = require('../models/photo')
 
 const router = express.Router()
 const jsonParser = bodyParser.json()
@@ -38,11 +38,11 @@ router.post('/gallery', async (req, res) => {
 
 // Add photos to library
 
-router.post('/gallery/:id/photos', auth, upload.array('photos', 6), urlencodedParser, async(req, res)=>{
+router.post('/gallery/:id/photos', auth, upload.array('photos', 6), urlencodedParser, async (req, res)=>{
     try {
-        const gallery = Gallerys.findById(req.params.id)
+        const gallery = await Gallerys.findById(req.params.id)
         if (!gallery) {
-            req.body.files.forEach(file => {
+            req.body.files.forEach(async (file) => {
                 const photo = new photos({
                     file: file.buffer,
                     gallery: gallery._id
@@ -112,3 +112,5 @@ router.get('/photos', async (req, res)=>{
         res.status(500).send(error.message)
     }
 })
+
+module.exports = router

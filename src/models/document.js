@@ -11,6 +11,10 @@ const documentSchema = new mongoose.Schema({
         require: [true, 'Specify the type of document'],
         trim: true
     },
+    abstract: {
+        type: String,
+        require: [true, "Please enter abstract for document"]
+    },
     file: {
         type: Buffer,
         required: [true, 'The document is required']
@@ -18,6 +22,15 @@ const documentSchema = new mongoose.Schema({
 },{
     timestamps: true
 })
+
+
+documentSchema.methods.toJSON = function(){
+    const documentObject = this.toObject()
+
+    delete documentObject.file
+
+    return documentObject
+}
 
 const documents = mongoose.model('Documents', documentSchema)
 

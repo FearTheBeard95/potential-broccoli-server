@@ -2,7 +2,7 @@ const mongoose = require ('mongoose')
 
 const photoSchema = new mongoose.Schema({
     file: {
-        type: Binary
+        type: Buffer
     },
     gallery: {
         type: mongoose.Schema.Types.ObjectId
@@ -20,7 +20,7 @@ photoSchema.methods.toJSON = function(){
     return photoObject
 }
 
-const Photos = mongoose.model('Photos', gallerySchema)
+const Photos = mongoose.model('Photos', photoSchema)
 
 module.exports = {
     Photos
