@@ -38,20 +38,23 @@ router.post('/gallery', async (req, res) => {
 
 // Add photos to library
 
-router.post('/gallery/:id/photos', auth, upload.array('photos', 6), urlencodedParser, async (req, res)=>{
+router.post('/gallery/photos', upload.array('photos', 6), urlencodedParser, async (req, res)=>{
     try {
-        const gallery = await Gallerys.findById(req.params.id)
-        if (!gallery) {
-            req.body.files.forEach(async (file) => {
-                const photo = new photos({
+        console.log(req.body.gallery)
+        const gallery = await Gallerys.findById(req.body.gallery)
+        console.log(req.files)
+        console.log(gallery)
+        if (gallery) {
+            req.files.forEach(async (file) => {
+                const photo = new Photos({
                     file: file.buffer,
-                    gallery: gallery._id
+                    gallery: req.body.gallery
                 })
 
                 await photo.save()
             });
 
-            res.status(200).send('Photos added')
+            res.redirect(req.get('referer'))
         }
         res.status(500).send('gallery does not exist')
     } catch (error) {
@@ -66,14 +69,60 @@ router.get('/gallery/:id', async (req, res) => {
         const gallery = await Gallerys.findById(req.params.id)
 
         await gallery.populate({
-            path: 'photos'
+            path: 'Photos'
         }).execPopulate()
         res.status(200).send({
-            gallery,
-            "photos": gallery.photos
+            "gallery": gallery,
+            "photos": gallery.Photos
         })
     } catch (error) {
-        res.status(500).send()
+        res.status(500).send('error.message')
+    }
+})
+
+router.get('/gallery', async (req, res) => {
+    try {
+        const gallery = await Gallerys.find()
+
+        if(!gallery){
+            res.status(404).send('No galleries found')
+        }
+        res.status(200).send({
+            "gallerys": gallery
+        })
+    } catch (error) {
+        
+    }
+})
+
+// get all photos
+
+router.get('/photos', async (req, res) => {
+    try {
+        const photographs = await Photos.find()
+
+        if(!photographs){
+            res.send("No photos found")
+        }
+        res.status(200).send({
+            photos: photographs
+        })
+    } catch (error) {
+        res.status(500).send(error.message)
+    }
+})
+
+router.get('/photos/:id', async (req, res) => {
+    try {
+        const photo = await Photos.findById(req.params.id)
+
+        if (!photo || !photo.file) {
+            return res.status(400).send('Photo not found')
+        }
+        res.set('Content-Type', 'image/png')
+        res.send(photo.file)
+    } catch (error) {
+        res.status(500).send(error.message)
     }
 })
 

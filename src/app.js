@@ -56,8 +56,8 @@ app.get('/articlesworkshop',(req, res) => {
     res.render('articlesworkshop')
 })
 
-app.get('/gallery',(req, res) => {
-    res.render('gallery')
+app.get('/photographs',(req, res) => {
+    res.render('photographs')
 })
 
 app.get('/search', async (req, res)=>{

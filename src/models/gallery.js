@@ -19,8 +19,8 @@ gallerySchema.methods.toJSON = function () {
 }
 
 // Link to photos
-gallerySchema.virtual('photos', {
-    ref: 'photos',
+gallerySchema.virtual('Photos', {
+    ref: 'Photos',
     localField: '_id',
     foreignField: 'gallery'
 })
