@@ -77,8 +77,8 @@
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <form class="row g-3" action="/documents/researchreport" accept-charset="UTF-8" method="POST"
-                                    enctype="multipart/form-data" id="documentForm">
+                                <form class="row g-3" action="/documents/researchreport" accept-charset="UTF-8"
+                                    method="POST" enctype="multipart/form-data" id="documentForm">
                                     <div class="col-md-12">
                                         <label for="inputTitle" class="form-label">Title</label>
                                         <input type="text" name="title" class="form-control" id="inputTitle"
@@ -117,8 +117,9 @@
 
                             <h3 class="sidebar-title">Search</h3>
                             <div class="sidebar-item search-form">
-                                <form action="">
-                                    <input type="text">
+                                <form method="GET" action="/search">
+                                    <input type="text" name="term">
+                                    <input type="text" name="type" readonly value="Research Report" hidden>
                                     <button type="submit"><i class="bi bi-search"></i></button>
                                 </form>
                             </div><!-- End sidebar search formn-->
@@ -126,12 +127,9 @@
                             <h3 class="sidebar-title">Categories</h3>
                             <div class="sidebar-item categories">
                                 <ul>
-                                    <li><a href="#">General <span>(25)</span></a></li>
-                                    <li><a href="#">Lifestyle <span>(12)</span></a></li>
-                                    <li><a href="#">Travel <span>(5)</span></a></li>
-                                    <li><a href="#">Design <span>(22)</span></a></li>
-                                    <li><a href="#">Creative <span>(8)</span></a></li>
-                                    <li><a href="#">Educaion <span>(14)</span></a></li>
+                                    <li><a href="/researchreports">Research Reports <span>(25)</span></a></li>
+                                    <li><a href="opinionpieces">Opinion Pieces <span>(12)</span></a></li>
+                                    <li><a href="articlesworkshop">Articles & Workshop Papers <span>(5)</span></a></li>
                                 </ul>
                             </div><!-- End sidebar categories-->
                             <h3 class="sidebar-title">Recent Posts</h3>

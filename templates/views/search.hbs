@@ -52,53 +52,7 @@
     <!-- ======= Breadcrumbs ======= -->
     <section class="breadcrumbs">
       <div class="container">
-
-        <ol>
-          <li><a href="index.html">Home</a></li>
-          <li>Articles and Workshop Papers</li>
-        </ol>
-        <h2>Articles and Workshop Papers</h2>
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#staticBackdrop">
-          Upload Paper
-        </button>
-
-        <!-- Modal -->
-        <div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1"
-          aria-labelledby="staticBackdropLabel" aria-hidden="true">
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="staticBackdropLabel" style="color: black;">Upload</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div class="modal-body">
-                <form class="row g-3" action="/documents/articleworkshop" accept-charset="UTF-8" method="POST"
-                  enctype="multipart/form-data" id="documentForm">
-                  <div class="col-md-12">
-                    <label for="inputTitle" class="form-label">Title</label>
-                    <input type="text" name="title" class="form-control" id="inputTitle" placeholder="Title" required>
-                  </div>
-                  <div class="col-12">
-                    <label for="inputAstract" class="form-label">Abstract</label>
-                    <textarea type="text" name="abstract" class="form-control" id="inputAstract" placeholder="Abstract"
-                      required></textarea>
-                  </div>
-                  <div class="mb-3">
-                    <label for="formFile" class="form-label">Paper</label>
-                    <input class="form-control" name="document" type="file" id="formFile" required>
-                  </div>
-                </form>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="submit" form="documentForm" class="btn btn-primary">Upload</button>
-              </div>
-            </div>
-          </div>
-        </div>
-
+        <h2>Search results</h2>
       </div>
     </section><!-- End Breadcrumbs -->
 
@@ -114,9 +68,8 @@
 
               <h3 class="sidebar-title">Search</h3>
               <div class="sidebar-item search-form">
-                <form method="GET" action="/search?type=Article Workshops">
+                <form method="GET" action="/search-all">
                   <input type="text" name="term">
-                  <input type="text" name="type" readonly value="Article Workshops" hidden>
                   <button type="submit"><i class="bi bi-search"></i></button>
                 </form>
               </div><!-- End sidebar search formn-->
@@ -125,8 +78,8 @@
               <div class="sidebar-item categories">
                 <ul>
                   <li><a href="/researchreports">Research Reports <span>(25)</span></a></li>
-                  <li><a href="opinionpieces">Opinion Pieces <span>(12)</span></a></li>
-                  <li><a href="articlesworkshop">Articles & Workshop Papers <span>(5)</span></a></li>
+                  <li><a href="/opinionpieces">Opinion Pieces <span>(12)</span></a></li>
+                  <li><a href="/articlesworkshop">Articles & Workshop Papers <span>(5)</span></a></li>
                 </ul>
               </div><!-- End sidebar categories-->
               <h3 class="sidebar-title">Recent Posts</h3>
@@ -203,6 +156,46 @@
   <!-- Template Main JS File -->
   <script src="js/main.js"></script>
   <script src="js/getDocuments.js"></script>
+  <script>
+    function renderResults() {
+        const term = `{{result}}`
+        const type = `{{type}}`
+        fetch('/search/' + term + '/'+type).then((response) => {
+            response.json().then((data) => {
+                const html = data.map((doc) => {
+                    return `<article class="entry">
+
+                                    <h2 class="entry-title">
+                                        <a href="blog-single.html">${doc.title}</a>
+                                    </h2>
+                                
+                                    <div class="entry-meta">
+                                        <ul>
+                                            <li class="d-flex align-items-center"><i class="bi bi-clock"></i> <a href="blog-single.html"><time
+                                                        datetime="2020-01-01">${doc.createdAt}</time></a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                
+                                    <div class="entry-content">
+                                        <p>
+                                        ${doc.abstract}
+                                        </p>
+                                        <div class="read-more">
+                                            <a href="/document/file/${doc._id}">Read More</a>
+                                        </div>
+                                    </div>
+                    
+                            </article>`
+                })
+                    .join("")
+                document.querySelector('#documents').innerHTML = html
+            })
+        })
+
+    }
+    renderResults()
+</script>
 
 </body>
 

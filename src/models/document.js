@@ -32,6 +32,8 @@ documentSchema.methods.toJSON = function(){
     return documentObject
 }
 
+documentSchema.index({title: "text"})
+
 const documents = mongoose.model('Documents', documentSchema)
 
 module.exports = {

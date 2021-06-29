@@ -8,6 +8,7 @@ const userRoute = require('./routers/user')
 const documentRoute = require('./routers/document')
 const galleryRoute = require('./routers/gallery')
 const mongoose = require('./database/mongoose')
+const { documents } = require('./models/document')
 const auth = require('../src/middleware/auth')
 
 const publicPath = path.join(__dirname,'../public')
@@ -59,17 +60,6 @@ app.get('/articlesworkshop',(req, res) => {
 app.get('/photographs',(req, res) => {
     res.render('photographs')
 })
-
-app.get('/search', async (req, res)=>{
-    const query = {$text: {$search: req.query.term}}
-    const articleAll = await articles.find(query)
-
-    if(!articleAll) {
-        res.render('search',{result: "none"})
-    }
-    res.render('search', {result: req.query.term})
-})
-
 app.get('/contact',(req, res)=> {
     res.render('contact')
 })
@@ -104,6 +94,57 @@ app.post('/contact', urlencodedParser, (req, res)=>{
     } catch (error) {
         
     }
+})
+// 
+app.get('/search', async (req, res)=>{
+    const query = {$text: {$search: req.query.term}, type: req.query.type}
+    const documentsAll = await documents.find(query)
+    const data = {result: req.query.term}
+
+    if(!documentsAll) {
+        return res.render('search',{result: "none"})
+    }
+    console.log(documentsAll)
+    if (req.query.type) {
+        data.type = req.query.type
+    }
+    res.render('search', data)
+
+    console.log(data)
+})
+
+app.get('/search-all', async (req, res)=>{
+    const query = {$text: {$search: req.query.term}}
+    const documentsAll = await documents.find(query)
+    const data = {result: req.query.term}
+
+    if(!documentsAll) {
+        return res.render('search',{result: "none"})
+    }
+    console.log(documentsAll)
+    res.render('search', data)
+
+    console.log(data)
+    console.log("searching all")
+})
+
+app.get('/search/:term/:type', async (req, res)=>{
+    const query = {$text: {$search: req.params.term}}
+    if (req.params.type) {
+        query.type = req.params.type
+    }
+    const documentsAll = await documents.find(query)
+
+    res.send(documentsAll)
+})
+app.get('/search/:term', async (req, res)=>{
+    const query = {$text: {$search: req.params.term}}
+    if (req.params.type) {
+        query.type = req.params.type
+    }
+    const documentsAll = await documents.find(query)
+
+    res.send(documentsAll)
 })
 
 module.exports = app
