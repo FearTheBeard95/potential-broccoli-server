@@ -147,4 +147,8 @@ app.get('/search/:term', async (req, res)=>{
     res.send(documentsAll)
 })
 
+app.get('/login', async (req, res) => {
+    res.render('login')
+})
+
 module.exports = app

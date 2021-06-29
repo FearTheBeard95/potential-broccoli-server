@@ -14,8 +14,11 @@
           <li><a class="nav-link scrollto" href="/opinionpieces">Opinion Pieces</a></li>
           <li><a class="nav-link scrollto" href="/articlesworkshop">Articles and Workshop Papers</a></li>
           <li><a class="nav-link scrollto" href="/photographs">Photographs</a></li>
-          <li><a class="nav-link scrollto" href="/login"><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#staticBackdrop">
+          <li><a class="nav-link scrollto" href="/login"><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#staticBackdrop" id="loginBtn">
                     login
+          </button></a></li>
+          <li><a class="nav-link scrollto" onclick="logout()"><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#staticBackdrop" id="logoutBtn" style="display: none;">
+                    logout
           </button></a></li>
           
         </ul>
@@ -24,3 +27,5 @@
 
     </div>
   </header><!-- End Header -->
+  <br>
+  <script src="js/logout.js"></script>

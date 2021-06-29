@@ -9,16 +9,7 @@ function fetchData(type) {
 
                             <h2 class="entry-title">
                                 <a href="blog-single.html">${doc.title}</a>
-                            </h2>
-                        
-                            <div class="entry-meta">
-                                <ul>
-                                    <li class="d-flex align-items-center"><i class="bi bi-clock"></i> <a href="blog-single.html"><time
-                                                datetime="2020-01-01">${doc.createdAt}</time></a>
-                                    </li>
-                                </ul>
-                            </div>
-                        
+                            </h2>               
                             <div class="entry-content">
                                 <p>
                                 ${doc.abstract}
@@ -55,16 +46,7 @@ function search(term, type) {
 
                             <h2 class="entry-title">
                                 <a href="blog-single.html">${doc.title}</a>
-                            </h2>
-                        
-                            <div class="entry-meta">
-                                <ul>
-                                    <li class="d-flex align-items-center"><i class="bi bi-clock"></i> <a href="blog-single.html"><time
-                                                datetime="2020-01-01">${doc.createdAt}</time></a>
-                                    </li>
-                                </ul>
-                            </div>
-                        
+                            </h2>    
                             <div class="entry-content">
                                 <p>
                                 ${doc.abstract}

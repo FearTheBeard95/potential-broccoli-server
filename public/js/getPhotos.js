@@ -8,8 +8,7 @@ function fetchPhotos() {
                             <img src="/photos/${photo._id}" class="img-fluid" alt="">
                             <div class="portfolio-info">
                                 <div class="portfolio-links">
-                                <a href="/photos/${photo._id}" data-gallery="portfolioGallery" class="portfokio-lightbox" title="App 1"><i class="bi bi-plus"></i></a>
-                                <a href="portfolio-details.html" title="More Details"><i class="bi bi-link"></i></a>
+                                <a href="/photos/${photo._id}" data-gallery="portfolioGallery" class="portfokio-lightbox" title="App 1"><i class="bi bi-zoom-in"></i></a>
                                 </div>
                             </div>
                             </div>
@@ -20,9 +19,6 @@ function fetchPhotos() {
         })
     })
 }
-
-
-
 
                 
       

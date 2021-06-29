@@ -40,23 +40,18 @@ router.post('/gallery', async (req, res) => {
 
 router.post('/gallery/photos', upload.array('photos', 6), urlencodedParser, async (req, res)=>{
     try {
-        console.log(req.body.gallery)
         const gallery = await Gallerys.findById(req.body.gallery)
-        console.log(req.files)
-        console.log(gallery)
-        if (gallery) {
-            req.files.forEach(async (file) => {
-                const photo = new Photos({
-                    file: file.buffer,
-                    gallery: req.body.gallery
-                })
-
-                await photo.save()
-            });
-
-            res.redirect(req.get('referer'))
+        if (!gallery) {
+            res.status(500).send('gallery does not exist')
         }
-        res.status(500).send('gallery does not exist')
+        await req.files.map( async (file) => {
+            const photo = new Photos({
+                file: file.buffer,
+                gallery: req.body.gallery
+            })
+            return await photo.save()
+        })
+        res.redirect(req.get('referer'))
     } catch (error) {
         res.status(500).send(error.message)
     }

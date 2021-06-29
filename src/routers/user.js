@@ -34,7 +34,7 @@ router.post('/users/login', urlencodedParser,async (req, res) =>{
         const user = await users.findByCredentials(req.body.email, req.body.password)
         const token = await user.generateAuthToken()
         res.cookie('auth_token', token)
-        res.status(200).send({user , token})
+        res.redirect('/')
     } catch (error) {
         res.status(500).send('Unable to login here')
     }
@@ -50,7 +50,8 @@ router.post('/users/logout', auth, async (req, res)=>{
         await req.user.save()
 
         res.cookie('auth_token', '')
-        res.status(200).send()
+
+        res.redirect('/')
     } catch (error) {
         res.status(500).send()
     }

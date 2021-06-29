@@ -24,7 +24,7 @@ const upload = multer({
 })
 
 // Create article reports route
-router.post('/documents/researchreport', urlencodedParser, upload.single('document'), async (req, res) => {
+router.post('/documents/researchreport', auth, urlencodedParser, upload.single('document'), async (req, res) => {
     try {
         const document = new documents({
             title: req.body.title,
@@ -41,7 +41,7 @@ router.post('/documents/researchreport', urlencodedParser, upload.single('docume
 })
 
 // Create opinion pieces route
-router.post('/documents/opinionpieces', urlencodedParser, upload.single('document'), async (req, res) => {
+router.post('/documents/opinionpieces', auth, urlencodedParser, upload.single('document'), async (req, res) => {
     try {
         const document = new documents({
             title: req.body.title,
@@ -89,7 +89,7 @@ router.get('/documents', async (req, res) => {
 })
 
 // Create article & workshop papers route
-router.post('/documents/articleworkshop', urlencodedParser, upload.single('document'), async (req, res) => {
+router.post('/documents/articleworkshop', auth, urlencodedParser, upload.single('document'), async (req, res) => {
     try {
         const document = new documents({
             title: req.body.title,

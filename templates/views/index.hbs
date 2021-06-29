@@ -30,6 +30,14 @@
   <link href="vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
     integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+    integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+  <!-- Font Awesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet" />
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
+  <!-- MDB -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.6.0/mdb.min.css" rel="stylesheet" />
 
   <!-- Template Main CSS File -->
   <link href="css/style.css" rel="stylesheet">
@@ -56,28 +64,37 @@
         </ol>
         <div class="carousel-inner">
           <div class="carousel-item active">
-            <img class="d-block w-100" src="http://vivaworkers.org/sites/default/files/slideshow/A.jpg"
+            <img class="d-block w-100" src="img/slideshow/A.jpg"
               alt="First slide">
 
             <div class="carousel-caption d-none d-md-block">
-              <h5>Research Reports</h5>
+              
+              <a class="nav-link scrollto" href="/login"><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#staticBackdrop" id="loginBtn">
+                    View Research Reports
+          </button></a>
             </div>
           </div>
           <div class="carousel-item">
-            <img class="d-block w-100" src="http://vivaworkers.org/sites/default/files/slideshow/OP.jpg"
+            <img class="d-block w-100" src="img/slideshow/OP.jpg"
               alt="Second slide">
 
             <div class="carousel-caption d-none d-md-block">
-              <h5>Opinion Pieces</h5>
+              
+              <a class="nav-link scrollto" href="/login"><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#staticBackdrop" id="loginBtn">
+                    View Opinion Pieces
+          </button></a>
             </div>
           </div>
           <div class="carousel-item">
             <img class="d-block w-100"
-              src="http://vivaworkers.org/sites/default/files/slideshow/Ramatex-Strike-8-1024x768.png"
+              src="img/slideshow/Ramatex-Strike-8-1024x768.png"
               alt="Third slide">
 
             <div class="carousel-caption d-none d-md-block">
-              <h5>Articles and Workshop Papers</h5>
+              
+              <a class="nav-link scrollto" href="/login"><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#staticBackdrop" id="loginBtn">
+                    View Articles and Workshop Papers
+          </button></a>
             </div>
           </div>
         </div>
@@ -129,7 +146,7 @@
         </div>
 
         <div class="col-lg-6 d-flex align-items-center" data-aos="zoom-out" data-aos-delay="200">
-          <img src="img/about.jpg" class="img-fluid" alt="">
+          <img src="img/photographs/about.jpg" class="img-fluid" alt="">
         </div>
 
       </div>
@@ -143,27 +160,27 @@
     <div class="container" data-aos="fade-up">
 
       <header class="section-header">
-        <h2>Blog</h2>
-        <p>Recent posts form our Blog</p>
+        <h2>Work</h2>
+        <p>Papers </p>
       </header>
 
       <div class="row">
 
         <div class="col-lg-4">
           <div class="post-box">
-            <div class="post-img"><img src="img/blog/blog-1.jpg" class="img-fluid" alt=""></div>
+            <div class="post-img"><img src="img/photographs/Kaokoland mining strike 2013.jpg" class="img-fluid" alt=""></div>
             <h3 class="post-title">Research Reports</h3>
             <p>This column contains various research reports authored and co-authored by Herbert Jauch since 1998. Most
               deal with socio-economic issues in Namibia while others address regional, continental or global
               challenges.</p>
-            <a href="researchreports" class="readmore stretched-link mt-auto"><span>Read More</span><i
+            <a href="/researchreports" class="readmore stretched-link mt-auto"><span>Read More</span><i
                 class="bi bi-arrow-right"></i></a>
           </div>
         </div>
 
         <div class="col-lg-4">
           <div class="post-box">
-            <div class="post-img"><img src="img/blog/blog-2.jpg" class="img-fluid" alt=""></div>
+            <div class="post-img"><img src="img/photographs/NUNW-Congress-1-059.jpg" class="img-fluid" alt=""></div>
             <h3 class="post-title">Opinion Pieces</h3>
             <p>Here you will find a variety of Herbert’s commentaries written since 2002. They cover a range of social,
               political and economic issues and were published in various newspapers and magazines.</p>
@@ -174,11 +191,11 @@
 
         <div class="col-lg-4">
           <div class="post-box">
-            <div class="post-img"><img src="img/blog/blog-3.jpg" class="img-fluid" alt=""></div>
+            <div class="post-img"><img src="img/photographs/Ramatex-Strike-6-1024x768.jpg" class="img-fluid" alt=""></div>
             <h3 class="post-title">Articles and Workshop Papers</h3>
             <p>This column contains a range of Herbert's articles that were published in various journals, newspapers
               and books. You will also find several papers presented at workshops, seminars and panel discussions.</p>
-            <a href="articlesworkshop" class="readmore stretched-link mt-auto"><span>Read More</span><i
+            <a href="/articlesworkshop" class="readmore stretched-link mt-auto"><span>Read More</span><i
                 class="bi bi-arrow-right"></i></a>
           </div>
         </div>
@@ -206,9 +223,18 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
     integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
     crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns"
+    crossorigin="anonymous"></script>
+  <!-- MDB -->
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.6.0/mdb.min.js"></script>
 
   <!-- Template Main JS File -->
   <script src="js/main.js"></script>
+  <script src="js/authenticated.js"></script>
 </body>
 
 </html>
