@@ -11,6 +11,10 @@ const documentSchema = new mongoose.Schema({
         require: [true, 'Specify the type of document'],
         trim: true
     },
+    date: {
+        type: Date,
+        require: [true, 'The date the document was submitted is required']
+    },
     abstract: {
         type: String,
         require: [true, "Please enter abstract for document"]

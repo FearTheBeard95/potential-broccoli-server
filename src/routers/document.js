@@ -29,6 +29,7 @@ router.post('/documents/researchreport', auth, urlencodedParser, upload.single('
         const document = new documents({
             title: req.body.title,
             type: "Research Report",
+            date: req.body.date,
             abstract: req.body.abstract,
             file: req.file.buffer
         })
@@ -46,6 +47,7 @@ router.post('/documents/opinionpieces', auth, urlencodedParser, upload.single('d
         const document = new documents({
             title: req.body.title,
             type: "Opinion Pieces",
+            date: req.body.date,
             abstract: req.body.abstract,
             file: req.file.buffer
         })
@@ -75,7 +77,7 @@ router.get('/documents', async (req, res) => {
     try {
         const skip = parseInt(req.query.skip) || 0
 
-        const docs = await documents.find(match).limit(4).skip(skip)
+        const docs = await documents.find(match).limit(4).skip(skip).sort('field -date')
         const count = await documents.count(match)
 
         res.status(200).send({
@@ -94,6 +96,7 @@ router.post('/documents/articleworkshop', auth, urlencodedParser, upload.single(
         const document = new documents({
             title: req.body.title,
             type: "Article Workshops",
+            date: req.body.date,
             abstract: req.body.abstract,
             file: req.file.buffer
         })
