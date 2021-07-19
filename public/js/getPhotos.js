@@ -1,6 +1,6 @@
 function fetchPhotos() {
     let dataGallery = {}
-    fetch('/gallery/60db2bedef41ca398573751b').then((response) => {
+    fetch('/gallery/60f5df38fdd0051d5c3d2371').then((response) => {
         response.json().then((data) => {
             const html = data.photos.map((photo) => {
                 return `<div class="col-lg-4 col-md-6 portfolio-item filter-app">
@@ -19,7 +19,7 @@ function fetchPhotos() {
         })
     })
 
-    fetch('/gallery/60db2c02ef41ca398573751c').then((response) => {
+    fetch('/gallery/60f5df4dfdd0051d5c3d2372').then((response) => {
         response.json().then((data) => {
             const html = data.photos.map((photo) => {
                 return `<div class="col-lg-4 col-md-6 portfolio-item filter-app">
@@ -38,7 +38,7 @@ function fetchPhotos() {
         })
     })
 
-    fetch('/gallery/60db2be4ef41ca398573751a').then((response) => {
+    fetch('/gallery/60f5df15fdd0051d5c3d2370').then((response) => {
         response.json().then((data) => {
             const html = data.photos.map((photo) => {
                 return `<div class="col-lg-4 col-md-6 portfolio-item filter-app">
