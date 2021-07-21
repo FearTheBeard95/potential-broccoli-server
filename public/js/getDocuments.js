@@ -46,7 +46,7 @@ function fetchData(type) {
 
             let pagination = []
             for (let i = 0; i < Math.round(data.count/4); i++) {
-                pagination.push(`<li><a href="/researchreports?page=${i}">${i+1}</a></li>`)
+                pagination.push(`<li><a href="/${type}?page=${i}">${i+1}</a></li>`)
             }
             const paginationHTML = pagination.join("")
             document.querySelector('#pages').innerHTML = paginationHTML
@@ -82,7 +82,7 @@ function search(term, type) {
 
             let pagination = []
             for (let i = 0; i < Math.round(data.count/4); i++) {
-                pagination.push(`<li><a href="/researchreports?page=${i}">${i+1}</a></li>`)
+                pagination.push(`<li><a href="/${type}?page=${i}">${i+1}</a></li>`)
             }
             const paginationHTML = pagination.join("")
             console.log(paginationHTML)
