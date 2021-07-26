@@ -24,7 +24,7 @@ function fetchData(type) {
                 return `<article class="entry">
 
                             <h2 class="entry-title">
-                                <a href="/document/file/${doc._id}l">${doc.title}</a>
+                                <a href="/document/file/${doc._id}">${doc.title}</a>
                             </h2>
                             <div class="entry-meta">
                                 <ul>
@@ -65,7 +65,7 @@ function search(term, type) {
                 return `<article class="entry">
 
                             <h2 class="entry-title">
-                                <a href="/document/file/${doc._id}l">${doc.title}</a>
+                                <a href="/document/file/${doc._id}">${doc.title}</a>
                             </h2>    
                             <div class="entry-content">
                                 <p>
