@@ -125,7 +125,7 @@ router.get('/document/file/:id', async (req, res) => {
 })
 
 // delete Document
-router.delete('/delete/:id', auth, async (req, res) => {
+router.delete('/document/delete/:id', auth, async (req, res) => {
     try {
         const document = await documents.findById(req.params.id)
 
