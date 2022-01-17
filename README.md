@@ -1,4 +1,4 @@
-# Viva WOrkers Web App
+# Viva Workers Web App
 
 ![alt text](https://miro.medium.com/max/2102/1*q9myzo5Au8OfsaSrCodNmw.png)
 
