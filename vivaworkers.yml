@@ -1,0 +1,610 @@
+openapi: 3.0.1
+info:
+  title: Viva Workers API
+  description: This is a an api for Viva Workers web application. the web application is used to upload the viva workers authors work for users to download and read when the visit the webapp.
+  contact:
+    email: sibalatanics@outlook.com
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.0
+externalDocs:
+  description: Find out more about Swagger
+  url: http://swagger.io
+servers:
+  - url: https://www.vivaworkers.org/v2
+  - url: http://www.vivaworkers.org/v2
+tags:
+  - name: Documents
+    description: Operations for all document types
+  - name: Gallery
+    description: All operations invloving the gallery
+  - name: user
+    description: Operations about user
+    externalDocs:
+      description: Find out more about our store
+      url: http://swagger.io
+paths:
+  /documents:
+    get:
+      tags:
+        - Documents
+      summary: Finds Documents by type
+      description: Get all documents either by type or not
+      operationId: findByDocumentType
+      parameters:
+        - name: type
+          in: query
+          description: Document type value that needs to be considered for filtering
+          required: false
+          style: form
+          explode: false
+          schema:
+            type: array
+            items:
+              type: string
+              enum:
+                - Article Workshops
+                - Opinion Pieces
+                - Research Report
+        - name: sortBy
+          in: query
+          description: Document type value that needs to be considered for filtering
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: string
+            enum:
+              - desc
+              - asce
+        - name: skip
+          in: query
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: integer
+        - name: limit
+          in: query
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Document'
+                x-content-type: application/json
+        '400':
+          description: Invalid type value
+          content: {}
+      x-swagger-router-controller: Documents
+    put:
+      tags:
+        - Documents
+      summary: Update an existing document
+      operationId: updateDocument
+      requestBody:
+        description: Document object that needs to be added to the repository
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Document'
+        required: true
+      responses:
+        '400':
+          description: Invalid ID supplied
+          content: {}
+        '404':
+          description: Document not found
+          content: {}
+        '405':
+          description: Validation exception
+          content: {}
+      security:
+        - vivaworkers_auth:
+            - admin
+      x-codegen-request-body-name: body
+      x-swagger-router-controller: Documents
+    post:
+      tags:
+        - Documents
+      summary: Add a new pet to the store
+      operationId: addDocument
+      requestBody:
+        description: Document object that needs to be added to the document repository
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Document'
+        required: true
+      responses:
+        '405':
+          description: Invalid input
+          content: {}
+      security:
+        - vivaworkers_auth:
+            - admin
+      x-codegen-request-body-name: body
+      x-swagger-router-controller: Documents
+  /documents/download/{id}:
+    get:
+      tags:
+        - Documents
+      summary: Download document
+      description: Downloads an exisitng document in pdf
+      operationId: downloadDocument
+      parameters:
+        - name: id
+          in: path
+          description: ID of document that needs to be downloaded
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/pdf:
+              schema:
+                $ref: '#/components/schemas/Document'
+        '400':
+          description: Invalid type value
+          content: {}
+      x-swagger-router-controller: Documents
+  /documents/{id}:
+    get:
+      tags:
+        - Documents
+      summary: Get a single document
+      operationId: getSingleDocument
+      parameters:
+        - name: id
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Document'
+        '400':
+          description: Invalid type value
+          content: {}
+      x-swagger-router-controller: Documents
+    delete:
+      tags:
+        - Documents
+      summary: Deletes a document
+      operationId: deleteDocument
+      parameters:
+        - name: id
+          in: path
+          description: Document id to delete
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '400':
+          description: Invalid ID supplied
+          content: {}
+        '404':
+          description: Pet not found
+          content: {}
+      security:
+        - vivaworkers_auth:
+            - admin
+      x-swagger-router-controller: Documents
+  /gallery:
+    post:
+      tags:
+        - Gallery
+      summary: uploads an image
+      operationId: createGallery
+      requestBody:
+        description: The photo that needs to be uploaded to the gallery
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Gallery'
+        required: true
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Gallery'
+      security:
+        - vivaworkers_auth:
+            - admin
+      x-codegen-request-body-name: body
+      x-swagger-router-controller: Gallery
+  /gallery/{id}:
+    get:
+      tags:
+        - Gallery
+      summary: gets gallery
+      operationId: getGallery
+      parameters:
+        - name: id
+          in: path
+          description: This is the id of the gallery to return
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Gallery'
+      x-swagger-router-controller: Gallery
+  /gallery/{id}/uploadImage:
+    post:
+      tags:
+        - Gallery
+      summary: uploads an image
+      operationId: uploadFile
+      parameters:
+        - name: id
+          in: path
+          description: This is the id of the gallery to which the photo is being uploaded to
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        description: The photo that needs to be uploaded to the gallery
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Photo'
+        required: true
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+      security:
+        - vivaworkers_auth:
+            - admin
+      x-codegen-request-body-name: body
+      x-swagger-router-controller: Gallery
+  /user:
+    post:
+      tags:
+        - user
+      summary: create a user
+      operationId: createUser
+      requestBody:
+        description: The user that needs to be created+
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+        required: true
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Gallery'
+      security:
+        - vivaworkers_auth:
+            - admin
+      x-codegen-request-body-name: body
+      x-swagger-router-controller: User
+  /user/login:
+    get:
+      tags:
+        - user
+      summary: Logs user into the system
+      operationId: loginUser
+      parameters:
+        - name: username
+          in: query
+          description: The user name for login
+          required: true
+          style: form
+          explode: true
+          schema:
+            type: string
+        - name: password
+          in: query
+          description: The password for login in clear text
+          required: true
+          style: form
+          explode: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+          headers:
+            X-Rate-Limit:
+              description: calls per hour allowed by the user
+              style: simple
+              explode: false
+              schema:
+                type: integer
+                format: int32
+            X-Expires-After:
+              description: date in UTC when token expires
+              style: simple
+              explode: false
+              schema:
+                type: string
+                format: date-time
+          content:
+            application/xml:
+              schema:
+                type: string
+                x-content-type: application/xml
+            application/json:
+              schema:
+                type: string
+        '400':
+          description: Invalid username/password supplied
+          content: {}
+      x-swagger-router-controller: User
+  /user/logout:
+    get:
+      tags:
+        - user
+      summary: Logs out current logged in user session
+      operationId: logoutUser
+      responses:
+        default:
+          description: successful operation
+          content: {}
+      x-swagger-router-controller: User
+  /user/{username}:
+    get:
+      tags:
+        - user
+      summary: Get user by user name
+      operationId: getUserByName
+      parameters:
+        - name: username
+          in: path
+          description: 'The name that needs to be fetched. Use user1 for testing. '
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/User'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          description: Invalid username supplied
+          content: {}
+        '404':
+          description: User not found
+          content: {}
+      security:
+        - vivaworkers_auth:
+            - admin
+      x-swagger-router-controller: User
+    put:
+      tags:
+        - user
+      summary: Updated user
+      description: This can only be done by the logged in user.
+      operationId: updateUser
+      parameters:
+        - name: username
+          in: path
+          description: name that need to be updated
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+      requestBody:
+        description: Updated user object
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/User'
+        required: true
+      responses:
+        '400':
+          description: Invalid user supplied
+          content: {}
+        '404':
+          description: User not found
+          content: {}
+      security:
+        - vivaworkers_auth:
+            - admin
+      x-codegen-request-body-name: body
+      x-swagger-router-controller: User
+    delete:
+      tags:
+        - user
+      summary: Delete user
+      description: This can only be done by the logged in user.
+      operationId: deleteUser
+      parameters:
+        - name: username
+          in: path
+          description: The name that needs to be deleted
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+      responses:
+        '400':
+          description: Invalid username supplied
+          content: {}
+        '404':
+          description: User not found
+          content: {}
+      security:
+        - vivaworkers_auth:
+            - admin
+      x-swagger-router-controller: User
+components:
+  schemas:
+    Document:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Identication number of the document
+          format: uuid
+        title:
+          type: string
+          description: Title of the document
+        type:
+          type: string
+          description: Document type
+          enum:
+            - Article Workshops
+            - Opinion Pieces
+            - Research Report
+        date:
+          type: string
+          description: Date that the document was submitted
+          format: date-time
+        abstract:
+          type: string
+          description: Short abstract of the document
+        url:
+          type: string
+          format: uri
+      example:
+        date: '2000-01-23T04:56:07.000Z'
+        id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        abstract: abstract
+        title: title
+        type: Article Workshops
+        url: http://example.com/aeiou
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        username:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+        phone:
+          type: string
+      example:
+        password: password
+        phone: phone
+        id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        email: email
+        username: username
+      xml:
+        name: User
+    Gallery:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        photos:
+          type: array
+          items:
+            $ref: '#/components/schemas/Photo'
+      example:
+        name: name
+        id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        photos:
+          - includeOnSlider: true
+            id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            gallery: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            url: http://example.com/aeiou
+          - includeOnSlider: true
+            id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            gallery: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            url: http://example.com/aeiou
+    Photo:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        gallery:
+          type: string
+          format: uuid
+        url:
+          type: string
+          format: uri
+        includeOnSlider:
+          type: boolean
+      example:
+        includeOnSlider: true
+        id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        gallery: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        url: http://example.com/aeiou
+    ApiResponse:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        type:
+          type: string
+        message:
+          type: string
+      example:
+        code: 0
+        type: type
+        message: message
+  securitySchemes:
+    vivaworkers_auth:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: https://vivaworkers.org/oauth/authorize
+          tokenUrl: https://vivaworkers.org/oauth/token
+          scopes:
+            read: Grants read access
+            write: Grants write access
+            admin: Grants read and write access to administrative information
